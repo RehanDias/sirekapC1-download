@@ -11,6 +11,9 @@ This repository contains scripts to fetch and download Form C1 images from the I
 - [Usage](#usage)
   - [JavaScript (Node.js)](#javascript-nodejs)
   - [Python](#python)
+- [Differences](#differences)
+- [JavaScript Code Overview](#javascript-code-overview)
+- [Python Code Overview](#python-code-overview)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -72,6 +75,30 @@ python sirekap-v.py
 ```
 
 2. The script performs similar operations as the JavaScript script, creating directories for administrative divisions, fetching data from the KPU API, and downloading the Form C1 images.
+
+### Differences
+
+While both scripts achieve the same goal of fetching and downloading Form C1 images from the KPU API, there are some differences in their implementation:
+
+- **Language**: The JavaScript script is written in Node.js, while the Python script is written in Python.
+- **Dependencies**: The JavaScript script requires the `axios` library for making HTTP requests, while the Python script uses built-in libraries such as `urllib.request` for the same purpose.
+- **Error Handling**: Error handling mechanisms may vary between the two scripts due to differences in language constructs and libraries used.
+
+## JavaScript Code Overview
+
+The JavaScript script (`sirekap-v.js`) consists of the following main components:
+
+1. **Download Functions**: Functions for downloading images from URLs with retry mechanisms.
+2. **Data Fetching**: Functions for fetching data from the KPU API and downloading images sequentially.
+3. **Main Execution**: The main function `fetchData()` to start the data fetching and image downloading process.
+
+## Python Code Overview
+
+The Python script (`sirekap-v.py`) comprises the following main components:
+
+1. **Download Function**: Function for downloading images from URLs with retry mechanisms.
+2. **Data Fetching**: Functions for fetching data from the KPU API and downloading images sequentially.
+3. **Main Execution**: The `fetch_data()` function to start the data fetching and image downloading process.
 
 ## Contributing
 
