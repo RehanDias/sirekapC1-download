@@ -5,17 +5,18 @@ This repository contains scripts to fetch and download Form C1 images from the I
 
 ## Table of Contents 📜
 
-- [Introduction](#introduction)
-- [Prerequisites](#prerequisites)
-- [Setup](#setup)
-- [Usage](#usage)
-  - [JavaScript (Node.js)](#javascript-nodejs)
-  - [Python](#python)
-- [Differences](#differences)
-- [JavaScript Code Overview](#javascript-code-overview)
-- [Python Code Overview](#python-code-overview)
-- [Contributing](#contributing)
-- [License](#license)
+- [Introduction](?tab=readme-ov-file#introduction-ℹ️)
+- [Prerequisites](?tab=readme-ov-file#prerequisites-️)
+- [Setup](?tab=readme-ov-file#setup-️)
+- [Usage](?tab=readme-ov-file#usage-)
+  - [JavaScript (Node.js)](?tab=readme-ov-file#javascript-nodejs-)
+  - [Python](?tab=readme-ov-file#python-)
+- [Differences](?tab=readme-ov-file#differences-)
+- [JavaScript Code Overview](?tab=readme-ov-file#javascript-code-overview-)
+- [Python Code Overview](?tab=readme-ov-file#python-code-overview-)
+- [Contributing](?tab=readme-ov-file#contributing-)
+- [License](?tab=readme-ov-file#license-)
+
 
 ## Introduction ℹ️
 
