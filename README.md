@@ -1,9 +1,8 @@
-
-# Sirekap C1 Image Downloader
+# Sirekap C1 Image Downloader 📷
 
 This repository contains scripts to fetch and download Form C1 images from the Indonesian General Election Commission (KPU) API. The provided scripts are available in both JavaScript (Node.js) and Python.
 
-## Table of Contents
+## Table of Contents 📜
 
 - [Introduction](#introduction)
 - [Prerequisites](#prerequisites)
@@ -17,18 +16,18 @@ This repository contains scripts to fetch and download Form C1 images from the I
 - [Contributing](#contributing)
 - [License](#license)
 
-## Introduction
+## Introduction ℹ️
 
 The Indonesian General Election Commission (KPU) provides an API that allows access to election-related data, including Form C1 images. This repository contains scripts to fetch data from the KPU API and download Form C1 images sequentially.
 
-## Prerequisites
+## Prerequisites 🛠️
 
 Ensure that you have the following software installed on your system:
 
 - [Node.js](https://nodejs.org/) (for JavaScript script)
 - [Python](https://www.python.org/) (for Python script)
 
-## Setup
+## Setup ⚙️
 
 1. Clone the repository to your local machine:
 
@@ -50,9 +49,9 @@ npm install axios
 
 No additional dependencies are required for the Python script.
 
-## Usage
+## Usage ▶️
 
-### JavaScript (Node.js)
+### JavaScript (Node.js) 🟢
 
 The JavaScript script (`sirekap-v.js`) fetches data from the KPU API and downloads Form C1 images sequentially.
 
@@ -64,7 +63,7 @@ node sirekap-v.js
 
 2. The script will create directories for each administrative division (province, regency/municipality, district, village), fetch the necessary data from the KPU API, and download the Form C1 images into their respective folders.
 
-### Python
+### Python 🐍
 
 The Python script (`sirekap-v.py`) also fetches data from the KPU API and downloads Form C1 images sequentially.
 
@@ -76,7 +75,7 @@ python sirekap-v.py
 
 2. The script performs similar operations as the JavaScript script, creating directories for administrative divisions, fetching data from the KPU API, and downloading the Form C1 images.
 
-### Differences
+### Differences ↔️
 
 While both scripts achieve the same goal of fetching and downloading Form C1 images from the KPU API, there are some differences in their implementation:
 
@@ -84,7 +83,7 @@ While both scripts achieve the same goal of fetching and downloading Form C1 ima
 - **Dependencies**: The JavaScript script requires the `axios` library for making HTTP requests, while the Python script uses built-in libraries such as `urllib.request` for the same purpose.
 - **Error Handling**: Error handling mechanisms may vary between the two scripts due to differences in language constructs and libraries used.
 
-## JavaScript Code Overview
+## JavaScript Code Overview 📋
 
 The JavaScript script (`sirekap-v.js`) consists of the following main components:
 
@@ -92,7 +91,7 @@ The JavaScript script (`sirekap-v.js`) consists of the following main components
 2. **Data Fetching**: Functions for fetching data from the KPU API and downloading images sequentially.
 3. **Main Execution**: The main function `fetchData()` to start the data fetching and image downloading process.
 
-## Python Code Overview
+## Python Code Overview 🐍
 
 The Python script (`sirekap-v.py`) comprises the following main components:
 
@@ -100,10 +99,10 @@ The Python script (`sirekap-v.py`) comprises the following main components:
 2. **Data Fetching**: Functions for fetching data from the KPU API and downloading images sequentially.
 3. **Main Execution**: The `fetch_data()` function to start the data fetching and image downloading process.
 
-## Contributing
+## Contributing 🤝
 
 Contributions are welcome! Feel free to submit pull requests or open issues for any improvements or bug fixes.
 
-## License
+## License 📝
 
 This project is licensed under the [MIT License](LICENSE).
