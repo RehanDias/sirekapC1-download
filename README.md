@@ -1,4 +1,4 @@
-# Sirekap C1 Image Downloader 📷
+# SIREKAP C1-Form Image Downloader 📷
 
 This repository contains scripts to fetch and download Form C1 images from the Indonesian General Election Commission (KPU) API. The provided scripts are available in both JavaScript (Node.js) and Python.
 
