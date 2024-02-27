@@ -43,7 +43,7 @@ git clone https://github.com/RehanDias/sirekapC1-download.git
 cd sirekapC1-download
 ```
 
-3. Install dependencies for the JavaScript script:
+3. Install dependencies for the JavaScript script if you want to run the Javascript file:
 
 ```bash
 npm install axios
