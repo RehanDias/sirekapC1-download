@@ -7,7 +7,7 @@ This repository contains scripts to fetch and download Form C1 images from the I
 
 The Indonesian General Election Commission (KPU) provides an API that allows access to election-related data, including Form C1 images. This repository contains scripts to fetch data from the KPU API and download Form C1 images sequentially.
 
-## Prerequisites 🛠️
+## Requirements 🛠️
 
 Ensure that you have the following software installed on your system:
 
