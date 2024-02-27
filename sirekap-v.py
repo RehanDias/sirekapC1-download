@@ -11,35 +11,35 @@ class ImageDownloader:
         max_retries = 3
         retries = 0
 
-        # Try downloading the image with retries
+        # Coba unduh gambar dengan percobaan
         while retries < max_retries:
             try:
                 urllib.request.urlretrieve(image_url, image_path)
-                print(f"Image downloaded successfully from {image_url}")
+                print(f"Gambar berhasil diunduh dari {image_url}")
                 return
             except Exception as e:
-                print(f"Error downloading image from {image_url}: {e}")
+                print(f"Error saat mengunduh gambar dari {image_url}: {e}")
                 retries += 1
 
-        print(f"Failed to download image after {max_retries} retries")
+        print(f"Gagal mengunduh gambar setelah {max_retries} percobaan")
 
     def download_images_sequentially(self, image_urls, folder_path, tps_name):
-        # Download each image in the list sequentially
+        # Unduh setiap gambar dalam daftar secara berurutan
         for i, image_url in enumerate(image_urls):
             if not image_url:
-                print(f"Null image URL for TPS {tps_name}")
+                print(f"URL gambar kosong untuk TPS {tps_name}")
                 continue
 
-            # Generate image name and path
+            # Generate nama dan path gambar
             image_extension = os.path.splitext(image_url)[1]
             image_name = f"{tps_name}-{i}{image_extension}"
             image_path = os.path.join(folder_path, image_name)
 
             try:
-                # Attempt to download the image with retries
+                # Coba unduh gambar dengan percobaan
                 self.download_image_with_retry(image_url, image_path)
             except Exception as e:
-                print(f"Error downloading image from {image_url}: {e}")
+                print(f"Error saat mengunduh gambar dari {image_url}: {e}")
 
 class DataFetcher:
     def __init__(self, base_path):
@@ -48,7 +48,7 @@ class DataFetcher:
 
     def fetch_data(self):
         try:
-            # Fetch province data
+            # Ambil data provinsi
             with urllib.request.urlopen("https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/pdpr/0.json") as response:
                 provinsi_data = json.loads(response.read())
 
@@ -59,17 +59,22 @@ class DataFetcher:
                     self.fetch_kabupaten_data(provinsi_folder, provinsi)
 
         except urllib.error.URLError as e:
-            # Retry mechanism for URL errors
-            print("URLError: Failed to fetch data:", e.reason)
-            print("Retrying in 5 seconds...")
+            # Penanganan kesalahan URL
+            print("URLError: Gagal mengambil data:", e.reason)
+            print("Mencoba lagi dalam 5 detik...")
             time.sleep(5)
-            self.fetch_data()  # Retry
+            self.fetch_data()  # Coba lagi
 
         except Exception as e:
-            print("Error fetching data:", e)
+            # Penanganan kesalahan lainnya
+            print("Error saat mengambil data:", e)
+
+        except KeyboardInterrupt:
+            # Penanganan interrupt keyboard
+            print("Proses dihentikan oleh pengguna.")
 
     def fetch_kabupaten_data(self, provinsi_folder, provinsi):
-        # Fetch district data
+        # Ambil data kabupaten
         with urllib.request.urlopen(f"https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/{provinsi['kode']}.json") as response_kabupaten:
             kabupaten_data = json.loads(response_kabupaten.read())
 
@@ -80,7 +85,7 @@ class DataFetcher:
                 self.fetch_kecamatan_data(kabupaten_folder, provinsi['kode'], kabupaten)
 
     def fetch_kecamatan_data(self, kabupaten_folder, provinsi_kode, kabupaten):
-        # Fetch sub-district data
+        # Ambil data kecamatan
         with urllib.request.urlopen(f"https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/{provinsi_kode}/{kabupaten['kode']}.json") as response_kecamatan:
             kecamatan_data = json.loads(response_kecamatan.read())
 
@@ -91,7 +96,7 @@ class DataFetcher:
                 self.fetch_kelurahan_data(kecamatan_folder, provinsi_kode, kabupaten['kode'], kecamatan)
 
     def fetch_kelurahan_data(self, kecamatan_folder, provinsi_kode, kabupaten_kode, kecamatan):
-        # Fetch village data
+        # Ambil data kelurahan
         with urllib.request.urlopen(f"https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/{provinsi_kode}/{kabupaten_kode}/{kecamatan['kode']}.json") as response_kelurahan:
             kelurahan_data = json.loads(response_kelurahan.read())
 
@@ -102,7 +107,7 @@ class DataFetcher:
                 self.fetch_tps_data(kelurahan_folder, provinsi_kode, kabupaten_kode, kecamatan['kode'], kelurahan)
 
     def fetch_tps_data(self, kelurahan_folder, provinsi_kode, kabupaten_kode, kecamatan_kode, kelurahan):
-        # Fetch polling station data
+        # Ambil data TPS
         with urllib.request.urlopen(f"https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/{provinsi_kode}/{kabupaten_kode}/{kecamatan_kode}/{kelurahan['kode']}.json") as response_tps:
             tps_data = json.loads(response_tps.read())
 
@@ -112,7 +117,7 @@ class DataFetcher:
                     image_urls = tps_detail_data.get("images", [])
                     self.downloader.download_images_sequentially(image_urls, kelurahan_folder, tps['nama'])
 
-# Usage
+# Penggunaan
 base_path = "./C-FORM"
 data_fetcher = DataFetcher(base_path)
 data_fetcher.fetch_data()
