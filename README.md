@@ -3,22 +3,6 @@
 
 This repository contains scripts to fetch and download Form C1 images from the Indonesian General Election Commission (KPU) API. The provided scripts are available in both JavaScript (Node.js) and Python.
 
-## Table of Contents 📜
-
-- [Introduction](?tab=readme-ov-file#introduction-ℹ️)
-- [Prerequisites](?tab=readme-ov-file#prerequisites-️)
-- [Setup](?tab=readme-ov-file#setup-️)
-- [Usage](?tab=readme-ov-file#usage-)
-  - [JavaScript (Node.js)](?tab=readme-ov-file#javascript-nodejs-)
-  - [Python](?tab=readme-ov-file#python-)
-- [Differences](?tab=readme-ov-file#differences-)
-- [JavaScript Code Overview](?tab=readme-ov-file#javascript-code-overview-)
-- [Python Code Overview](?tab=readme-ov-file#python-code-overview-)
-- [Contributing](?tab=readme-ov-file#contributing-)
-- [License](?tab=readme-ov-file#license-)
-
-
-
 ## Introduction ℹ️
 
 The Indonesian General Election Commission (KPU) provides an API that allows access to election-related data, including Form C1 images. This repository contains scripts to fetch data from the KPU API and download Form C1 images sequentially.
