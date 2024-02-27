@@ -18,6 +18,7 @@ This repository contains scripts to fetch and download Form C1 images from the I
 - [License](?tab=readme-ov-file#license-)
 
 
+
 ## Introduction ℹ️
 
 The Indonesian General Election Commission (KPU) provides an API that allows access to election-related data, including Form C1 images. This repository contains scripts to fetch data from the KPU API and download Form C1 images sequentially.
@@ -43,7 +44,7 @@ git clone https://github.com/RehanDias/sirekapC1-download.git
 cd sirekapC1-download
 ```
 
-3. Install dependencies for the JavaScript script if you want to run the Javascript file:
+3. Install dependencies for the JavaScript script if you want to run the JavaScript file:
 
 ```bash
 npm install axios
@@ -77,7 +78,7 @@ python sirekap-v.py
 
 2. The script performs similar operations as the JavaScript script, creating directories for administrative divisions, fetching data from the KPU API, and downloading the Form C1 images.
 
-### Differences ↔️
+## Differences ↔️
 
 While both scripts achieve the same goal of fetching and downloading Form C1 images from the KPU API, there are some differences in their implementation:
 
@@ -89,17 +90,17 @@ While both scripts achieve the same goal of fetching and downloading Form C1 ima
 
 The JavaScript script (`sirekap-v.js`) consists of the following main components:
 
-1. **Download Functions**: Functions for downloading images from URLs with retry mechanisms.
-2. **Data Fetching**: Functions for fetching data from the KPU API and downloading images sequentially.
-3. **Main Execution**: The main function `fetchData()` to start the data fetching and image downloading process.
+1. **ImageDownloader Class**: Manages the downloading of images from URLs with retry mechanisms.
+2. **DataFetcher Class**: Fetches data from the KPU API and downloads images sequentially for administrative divisions.
+3. **Main Execution**: The `fetchData()` function initiates the data fetching and image downloading process.
 
 ## Python Code Overview 🐍
 
 The Python script (`sirekap-v.py`) comprises the following main components:
 
-1. **Download Function**: Function for downloading images from URLs with retry mechanisms.
-2. **Data Fetching**: Functions for fetching data from the KPU API and downloading images sequentially.
-3. **Main Execution**: The `fetch_data()` function to start the data fetching and image downloading process.
+1. **ImageDownloader Class**: Manages image downloading with retry mechanisms.
+2. **DataFetcher Class**: Fetches data from the KPU API and downloads images sequentially for administrative divisions.
+3. **Main Execution**: The `fetch_data()` function starts the data fetching and image downloading process.
 
 ## Contributing 🤝
 
