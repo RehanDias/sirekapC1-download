@@ -2,12 +2,22 @@ import os
 import urllib.request
 import json
 import time
+from urllib.parse import urlparse
 
 class ImageDownloader:
     def __init__(self, base_path):
         self.base_path = base_path
 
+    def is_valid_url(self, url):
+        """Validate if URL uses HTTPS scheme"""
+        parsed = urlparse(url)
+        return parsed.scheme == 'https' and parsed.netloc.endswith('kpu.go.id')
+
     def download_image_with_retry(self, image_url, image_path):
+        if not self.is_valid_url(image_url):
+            print(f"Invalid URL scheme or domain: {image_url}")
+            return
+
         max_retries = 3
         retries = 0
 
@@ -45,11 +55,23 @@ class DataFetcher:
     def __init__(self, base_path):
         self.base_path = base_path
         self.downloader = ImageDownloader(base_path)
+        self.base_api_url = "https://sirekap-obj-data.kpu.go.id"
+
+    def is_valid_url(self, url):
+        """Validate if URL uses HTTPS scheme"""
+        parsed = urlparse(url)
+        return parsed.scheme == 'https' and parsed.netloc.endswith('kpu.go.id')
+
+    def safe_urlopen(self, url):
+        """Safely open URLs after validation"""
+        if not self.is_valid_url(url):
+            raise ValueError(f"Invalid URL scheme or domain: {url}")
+        return urllib.request.urlopen(url)
 
     def fetch_data(self):
         try:
-            # Ambil data provinsi
-            with urllib.request.urlopen("https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/pdpr/0.json") as response:
+            api_url = f"{self.base_api_url}/wilayah/pemilu/pdpr/0.json"
+            with self.safe_urlopen(api_url) as response:
                 provinsi_data = json.loads(response.read())
 
                 for provinsi in provinsi_data:
@@ -74,8 +96,8 @@ class DataFetcher:
             print("Proses dihentikan oleh pengguna.")
 
     def fetch_kabupaten_data(self, provinsi_folder, provinsi):
-        # Ambil data kabupaten
-        with urllib.request.urlopen(f"https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/{provinsi['kode']}.json") as response_kabupaten:
+        api_url = f"{self.base_api_url}/wilayah/pemilu/ppwp/{provinsi['kode']}.json"
+        with self.safe_urlopen(api_url) as response_kabupaten:
             kabupaten_data = json.loads(response_kabupaten.read())
 
             for kabupaten in kabupaten_data:
@@ -85,8 +107,8 @@ class DataFetcher:
                 self.fetch_kecamatan_data(kabupaten_folder, provinsi['kode'], kabupaten)
 
     def fetch_kecamatan_data(self, kabupaten_folder, provinsi_kode, kabupaten):
-        # Ambil data kecamatan
-        with urllib.request.urlopen(f"https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/{provinsi_kode}/{kabupaten['kode']}.json") as response_kecamatan:
+        api_url = f"{self.base_api_url}/wilayah/pemilu/ppwp/{provinsi_kode}/{kabupaten['kode']}.json"
+        with self.safe_urlopen(api_url) as response_kecamatan:
             kecamatan_data = json.loads(response_kecamatan.read())
 
             for kecamatan in kecamatan_data:
@@ -96,8 +118,8 @@ class DataFetcher:
                 self.fetch_kelurahan_data(kecamatan_folder, provinsi_kode, kabupaten['kode'], kecamatan)
 
     def fetch_kelurahan_data(self, kecamatan_folder, provinsi_kode, kabupaten_kode, kecamatan):
-        # Ambil data kelurahan
-        with urllib.request.urlopen(f"https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/{provinsi_kode}/{kabupaten_kode}/{kecamatan['kode']}.json") as response_kelurahan:
+        api_url = f"{self.base_api_url}/wilayah/pemilu/ppwp/{provinsi_kode}/{kabupaten_kode}/{kecamatan['kode']}.json"
+        with self.safe_urlopen(api_url) as response_kelurahan:
             kelurahan_data = json.loads(response_kelurahan.read())
 
             for kelurahan in kelurahan_data:
@@ -107,12 +129,13 @@ class DataFetcher:
                 self.fetch_tps_data(kelurahan_folder, provinsi_kode, kabupaten_kode, kecamatan['kode'], kelurahan)
 
     def fetch_tps_data(self, kelurahan_folder, provinsi_kode, kabupaten_kode, kecamatan_kode, kelurahan):
-        # Ambil data TPS
-        with urllib.request.urlopen(f"https://sirekap-obj-data.kpu.go.id/wilayah/pemilu/ppwp/{provinsi_kode}/{kabupaten_kode}/{kecamatan_kode}/{kelurahan['kode']}.json") as response_tps:
+        api_url = f"{self.base_api_url}/wilayah/pemilu/ppwp/{provinsi_kode}/{kabupaten_kode}/{kecamatan_kode}/{kelurahan['kode']}.json"
+        with self.safe_urlopen(api_url) as response_tps:
             tps_data = json.loads(response_tps.read())
 
             for tps in tps_data:
-                with urllib.request.urlopen(f"https://sirekap-obj-data.kpu.go.id/pemilu/hhcw/pdpr/{provinsi_kode}/{kabupaten_kode}/{kecamatan_kode}/{kelurahan['kode']}/{tps['kode']}.json") as response_tps_detail:
+                detail_url = f"{self.base_api_url}/pemilu/hhcw/pdpr/{provinsi_kode}/{kabupaten_kode}/{kecamatan_kode}/{kelurahan['kode']}/{tps['kode']}.json"
+                with self.safe_urlopen(detail_url) as response_tps_detail:
                     tps_detail_data = json.loads(response_tps_detail.read())
                     image_urls = tps_detail_data.get("images", [])
                     self.downloader.download_images_sequentially(image_urls, kelurahan_folder, tps['nama'])
