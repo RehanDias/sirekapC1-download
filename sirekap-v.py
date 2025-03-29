@@ -4,9 +4,22 @@ import json
 import time
 from urllib.parse import urlparse
 
+# Add safe URL opener setup
+def create_safe_opener():
+    """Create URL opener that only allows HTTP/HTTPS schemes"""
+    opener = urllib.request.build_opener(
+        urllib.request.HTTPHandler(),
+        urllib.request.HTTPSHandler()
+    )
+    return opener
+
+# Create global safe opener
+safe_opener = create_safe_opener()
+
 class ImageDownloader:
     def __init__(self, base_path):
         self.base_path = base_path
+        self.opener = safe_opener
 
     def is_valid_url(self, url):
         """Validate if URL uses HTTPS scheme"""
@@ -21,10 +34,12 @@ class ImageDownloader:
         max_retries = 3
         retries = 0
 
-        # Coba unduh gambar dengan percobaan
         while retries < max_retries:
             try:
-                urllib.request.urlretrieve(image_url, image_path)
+                # Replace urlretrieve with safe download
+                with self.opener.open(image_url) as response:
+                    with open(image_path, 'wb') as f:
+                        f.write(response.read())
                 print(f"Gambar berhasil diunduh dari {image_url}")
                 return
             except Exception as e:
@@ -56,6 +71,7 @@ class DataFetcher:
         self.base_path = base_path
         self.downloader = ImageDownloader(base_path)
         self.base_api_url = "https://sirekap-obj-data.kpu.go.id"
+        self.opener = safe_opener
 
     def is_valid_url(self, url):
         """Validate if URL uses HTTPS scheme"""
@@ -66,7 +82,7 @@ class DataFetcher:
         """Safely open URLs after validation"""
         if not self.is_valid_url(url):
             raise ValueError(f"Invalid URL scheme or domain: {url}")
-        return urllib.request.urlopen(url)
+        return self.opener.open(url)
 
     def fetch_data(self):
         try:
